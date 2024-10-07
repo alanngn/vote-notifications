@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.1.5",
+    "@vercel/postgres": "^0.10.0",
     "canvas-confetti": "^1.9.3",
     "next": "14.2.14",
     "pg": "^8.13.0",

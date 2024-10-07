@@ -1,0 +1,7 @@
+.toast-container {
+    background: linear-gradient(135deg, #4caf50 30%, #81c784 100%); /* Green gradient for votes */
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    color: white;
+}
