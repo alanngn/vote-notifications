@@ -10,10 +10,6 @@ export default function Home() {
     // Function to trigger toast notification and confetti
     const triggerVote = async () => {
         try {
-            // Randomize toast position
-            const randomTop = Math.floor(Math.random() * 80); // Random vertical position
-            const randomLeft = Math.floor(Math.random() * 80); // Random horizontal position
-
             // Show toast notification with no close button
             toast(
                 <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -30,13 +26,16 @@ export default function Home() {
                 }
             );
 
-            // Trigger confetti animation at a random position
+            // Trigger confetti animation with random Y position starting from at least 1/3 down the page
+            const randomY = 0.33 + Math.random() * 0.67; // Y position between 1/3 and the bottom of the page
+            const randomX = Math.random(); // X position anywhere across the width
+
             confetti({
                 particleCount: 100,
                 spread: 70,
                 origin: {
-                    x: Math.random(), // Random X position
-                    y: Math.random(), // Random Y position
+                    x: randomX, // Random X position (0 to 1)
+                    y: randomY, // Random Y position between 0.33 and 1
                 },
                 shapes: ['circle'],
                 colors: ['#bbdefb', '#ffcc80', '#ff8a65'],
