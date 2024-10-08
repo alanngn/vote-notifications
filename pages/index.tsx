@@ -10,7 +10,7 @@ const colorPalette = [
     '#1F77B4', '#FF7F0E', '#2CA02C', '#D62728', '#9467BD', '#E377C2', '#17BECF', '#BCBD22',
 ];
 
-let usedColorIndices = new Map(); // Keeps track of which color is assigned to each organization
+const usedColorIndices = new Map(); // Keeps track of which color is assigned to each organization
 let currentColorIndex = 0; // Tracks the current color index to ensure no repeats
 
 // Function to map organization name to a unique color
