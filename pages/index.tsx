@@ -92,7 +92,7 @@ export default function Home() {
                 <CheckCircleIcon className="w-8 h-8 flex-shrink-0" style={{color: getColorForOrganization(organizationName)}} /> {/* Custom vote icon aligned to the right */}
             </div>,
             {
-                autoClose: 3000,
+                autoClose: 2000,
                 closeButton: false,
                 progressStyle: {
                     background: getColorForOrganization(organizationName), // Apply the dynamic background color
