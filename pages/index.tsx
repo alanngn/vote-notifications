@@ -3,6 +3,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import confetti from 'canvas-confetti';
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import { useRouter } from 'next/router'; // Import useRouter to access query params
 import { Vote } from '@/types';
 
 // Define a vibrant, professional color palette with easily distinguishable colors
@@ -25,13 +26,14 @@ const getColorForOrganization = (organizationName: string) => {
 export default function Home() {
     const [lastVoteTimestamp, setLastVoteTimestamp] = useState<string | null>(null);
     const pollVotes = useRef<NodeJS.Timeout | null>(null);
+    const router = useRouter(); // Use useRouter to access query parameters
 
     const presetOrganizations = [
-        { name: 'samay', logoUrl: 'https://via.placeholder.com/50/FF6347/FFFFFF?text=Org1', bgColor: '#FF6347' },
-        { name: 'flowmedical', logoUrl: 'https://via.placeholder.com/50/4682B4/FFFFFF?text=Org2', bgColor: '#4682B4' },
-        { name: 'brainspace', logoUrl: 'https://via.placeholder.com/50/32CD32/FFFFFF?text=Org3', bgColor: '#32CD32' },
-        { name: 'juniperbiomedical', logoUrl: 'https://via.placeholder.com/50/FFD700/FFFFFF?text=Org4', bgColor: '#FFD700' },
-        { name: 'neurobionics', logoUrl: 'https://via.placeholder.com/50/8A2BE2/FFFFFF?text=Org5', bgColor: '#8A2BE2' },
+        { name: 'samay'},
+        { name: 'flowmedical'},
+        { name: 'brainspace'},
+        { name: 'juniperbiomedical'},
+        { name: 'neurobionics'},
     ];
 
     const initializeVotes = async () => {
@@ -50,7 +52,7 @@ export default function Home() {
     }, [])
 
     useEffect(() => {
-        const pollInterval = 750    ;
+        const pollInterval = 500;
 
         const fetchVotes = async () => {
             try {
@@ -128,6 +130,9 @@ export default function Home() {
         }
     };
 
+    // Check if the "debug" query parameter exists
+    const showButtons = router.query.debug !== undefined;
+
     return (
         <div className="flex min-h-screen bg-gray-100">
             <div className="flex flex-col items-start p-4 space-y-4">
@@ -136,17 +141,19 @@ export default function Home() {
                     alt="Medtech Innovator Logo"
                     className="h-16 w-auto mb-4"
                 />
-                <div className="flex flex-col space-y-4">
-                    {presetOrganizations.map((org, index) => (
-                        <button
-                            key={index}
-                            onClick={() => triggerVote(org.name)}
-                            className="bg-gray-800 text-white px-6 py-2 text-lg rounded shadow-md hover:bg-gray-700 transition duration-300"
-                        >
-                            Vote for {org.name}
-                        </button>
-                    ))}
-                </div>
+                {showButtons && (
+                    <div className="flex flex-col space-y-4">
+                        {presetOrganizations.map((org, index) => (
+                            <button
+                                key={index}
+                                onClick={() => triggerVote(org.name)}
+                                className="bg-gray-800 text-white px-6 py-2 text-lg rounded shadow-md hover:bg-gray-700 transition duration-300"
+                            >
+                                Vote for {org.name}
+                            </button>
+                        ))}
+                    </div>
+                )}
             </div>
             <ToastContainer position="top-center" style={{ width: '500px' }} />
         </div>
