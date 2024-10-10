@@ -47,20 +47,24 @@ export default function Home() {
 
     useEffect(() => {
         initializeVotes();
+    }, [])
 
-        const pollInterval = 750;
+    useEffect(() => {
+        const pollInterval = 750    ;
 
         const fetchVotes = async () => {
             try {
                 const res = await fetch(`/api/getVotes?lastVoteTimestamp=${encodeURIComponent(lastVoteTimestamp || '')}`);
                 const newVotes = await res.json();
-
+                console.log(newVotes, 'newVotes', lastVoteTimestamp)
                 if (newVotes.length > 0) {
                     newVotes.forEach((vote: Vote) => {
                         triggerNotification(vote.organization_name);
                     });
-                    const latestVoteTimestamp = newVotes[newVotes.length - 1].utc_created_at;
-                    setLastVoteTimestamp(latestVoteTimestamp);
+                    const latestVoteTimestampNew = newVotes[newVotes.length - 1].utc_created_at;
+                    console.log(newVotes, newVotes[newVotes.length - 1], 'new votes')
+                    console.log(latestVoteTimestampNew, 'latestTimestamp')
+                    setLastVoteTimestamp(latestVoteTimestampNew);
                 }
             } catch (error) {
                 console.error('Error fetching votes:', error);
