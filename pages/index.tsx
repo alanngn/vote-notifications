@@ -48,7 +48,7 @@ export default function Home() {
     useEffect(() => {
         initializeVotes();
 
-        const pollInterval = 1000;
+        const pollInterval = 750;
 
         const fetchVotes = async () => {
             try {
@@ -91,7 +91,7 @@ export default function Home() {
                 <CheckCircleIcon className="w-8 h-8 flex-shrink-0" style={{color: getColorForOrganization(organizationName)}} /> {/* Custom vote icon aligned to the right */}
             </div>,
             {
-                autoClose: 2000,
+                autoClose: 1000,
                 closeButton: false,
                 progressStyle: {
                     background: getColorForOrganization(organizationName), // Apply the dynamic background color
