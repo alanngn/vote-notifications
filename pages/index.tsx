@@ -3,7 +3,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import confetti from 'canvas-confetti';
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
-import { Vote, Organization } from '@/types';
+import { Vote } from '@/types';
 
 // Define a vibrant, professional color palette with easily distinguishable colors
 const colorPalette = [
@@ -27,11 +27,11 @@ export default function Home() {
     const pollVotes = useRef<NodeJS.Timeout | null>(null);
 
     const presetOrganizations = [
-        { name: 'Organization 1', logoUrl: 'https://via.placeholder.com/50/FF6347/FFFFFF?text=Org1', bgColor: '#FF6347' },
-        { name: 'Organization 2', logoUrl: 'https://via.placeholder.com/50/4682B4/FFFFFF?text=Org2', bgColor: '#4682B4' },
-        { name: 'Organization 3', logoUrl: 'https://via.placeholder.com/50/32CD32/FFFFFF?text=Org3', bgColor: '#32CD32' },
-        { name: 'Organization 4', logoUrl: 'https://via.placeholder.com/50/FFD700/FFFFFF?text=Org4', bgColor: '#FFD700' },
-        { name: 'Organization 5', logoUrl: 'https://via.placeholder.com/50/8A2BE2/FFFFFF?text=Org5', bgColor: '#8A2BE2' },
+        { name: 'samay', logoUrl: 'https://via.placeholder.com/50/FF6347/FFFFFF?text=Org1', bgColor: '#FF6347' },
+        { name: 'flowmedical', logoUrl: 'https://via.placeholder.com/50/4682B4/FFFFFF?text=Org2', bgColor: '#4682B4' },
+        { name: 'brainspace', logoUrl: 'https://via.placeholder.com/50/32CD32/FFFFFF?text=Org3', bgColor: '#32CD32' },
+        { name: 'juniperbiomedical', logoUrl: 'https://via.placeholder.com/50/FFD700/FFFFFF?text=Org4', bgColor: '#FFD700' },
+        { name: 'neurobionics', logoUrl: 'https://via.placeholder.com/50/8A2BE2/FFFFFF?text=Org5', bgColor: '#8A2BE2' },
     ];
 
     const initializeVotes = async () => {
@@ -57,7 +57,7 @@ export default function Home() {
 
                 if (newVotes.length > 0) {
                     newVotes.forEach((vote: Vote) => {
-                        triggerNotification(vote.organization_name, vote.logo_url);
+                        triggerNotification(vote.organization_name);
                     });
                     const latestVoteTimestamp = newVotes[newVotes.length - 1].utc_created_at;
                     setLastVoteTimestamp(latestVoteTimestamp);
@@ -78,16 +78,15 @@ export default function Home() {
         };
     }, [lastVoteTimestamp]);
 
-    const triggerNotification = (organizationName: string, logoUrl: string) => {
+    const triggerNotification = (organizationName: string) => {
         toast(
             <div className="flex items-center text-lg justify-between" style={{ padding: '10px', borderRadius: '8px' }}>
                 <div className="flex items-center flex-grow">
                     <img
-                        src={logoUrl}
+                        src={`/${organizationName}.png`}
                         alt={organizationName}
-                        className="w-16 h-16 mr-4"
+                        className="h-14 mr-4"
                     />
-                    <span className="font-bold">Vote casted for {organizationName}</span>
                 </div>
                 <CheckCircleIcon className="w-8 h-8 flex-shrink-0" style={{color: getColorForOrganization(organizationName)}} /> {/* Custom vote icon aligned to the right */}
             </div>,
@@ -111,14 +110,13 @@ export default function Home() {
         });
     };
 
-    const triggerVote = async (organization: Organization) => {
+    const triggerVote = async (organizationName: string) => {
         try {
             await fetch('/api/insertVote', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    organizationName: organization.name,
-                    logoUrl: organization.logoUrl,
+                    organizationName: organizationName,
                 }),
             });
         } catch (error) {
@@ -138,7 +136,7 @@ export default function Home() {
                     {presetOrganizations.map((org, index) => (
                         <button
                             key={index}
-                            onClick={() => triggerVote(org)}
+                            onClick={() => triggerVote(org.name)}
                             className="bg-gray-800 text-white px-6 py-2 text-lg rounded shadow-md hover:bg-gray-700 transition duration-300"
                         >
                             Vote for {org.name}

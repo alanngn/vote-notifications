@@ -7,13 +7,13 @@ import { Vote } from '@/types';
 // TypeScript API handler function for inserting a new vote
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     if (req.method === 'POST') {
-        const { organizationName, logoUrl } = req.body as { organizationName: string, logoUrl: string };
+        const { organizationName} = req.body as { organizationName: string, logoUrl: string };
 
         try {
             // Insert a new vote with a default created_at timestamp
             const result = await sql<Vote[]>`
-        INSERT INTO votes (organization_name, logo_url)
-        VALUES (${organizationName}, ${logoUrl})
+        INSERT INTO votes (organization_name)
+        VALUES (${organizationName})
         RETURNING *;
       `;
 
