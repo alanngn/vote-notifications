@@ -123,7 +123,7 @@ export default function Home() {
         style: {
           position: "absolute",
           left: Math.floor(Math.random() * 500),
-          top: Math.floor(Math.random() * 500),
+          top: Math.floor(Math.random() * 900),
         },
       }
     );
@@ -156,7 +156,8 @@ export default function Home() {
   const showButtons = router.query.debug !== undefined;
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen ">
+      <div className="absolute rounded-full border-grey-500 bg-gray-300 w-[1000px] h-[1000px] border-dashed border-2 z-[-1]"></div>
       <div className="flex flex-col items-start p-4 space-y-4">
         <img
           src="https://assets.medtechinnovator.org/wp-content/uploads/2016/07/08103054/Medtech_Logo_Color-e1467418814934.png"
