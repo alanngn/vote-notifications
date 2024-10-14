@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import confetti from "canvas-confetti";
-import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/router"; // Import useRouter to access query params
 import { Vote } from "@/types";
 
@@ -99,7 +98,7 @@ export default function Home() {
   }, [lastVoteTimestamp]);
 
   const triggerNotification = (organizationName: string) => {
-    const id = toast(
+    toast(
       <div
         className="flex items-center text-lg justify-between"
         style={{
